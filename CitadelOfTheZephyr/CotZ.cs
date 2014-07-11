@@ -16,6 +16,7 @@ namespace CitadelOfTheZephyr {
 		public static int tileSize = 64;			//Sets the space between tiles
 		public static int fx = 15 * tileSize + 16;	//Form Width
 		public static int fy = 15 * tileSize + 38;	//Form Height
+		public static int fx2 = fx / 2, fy2 = fy / 2;
 		public static Graphics gb, gf;
 		public static Bitmap gi;					//Graphics objects
 		#endregion Form
@@ -89,7 +90,7 @@ namespace CitadelOfTheZephyr {
 		#endregion Actors
 		#region Screens
 		public enum eGS : int { Title, Game, GameOver }
-		public static eGS gameState = eGS.Title;
+		public static eGS gameState = (eGS)10;//eGS.Title;
 		public enum eTS : int { Title = -1, NewGame, LoadGame, Options, Quit }
 		public static eTS titleState = eTS.Title;
 
@@ -164,6 +165,19 @@ namespace CitadelOfTheZephyr {
 
 
 					break;
+				case (eGS)10:
+					float x = 0, y = 0, oy = 0, sx = 0, sy = 0, skx = 64, sky = 64;
+					gb.DrawLine(Pens.Gray, fx2, 0, fx2, fy); gb.DrawLine(Pens.Gray, 0, fy2, fx, fy2);
+					for(float a = -skx ; a < skx+1 ; a+=0.01f) {
+						//for(int b = -32 ; b < 33 ; b++) {
+							x = a; y = a * a;
+							sx = (x + skx) * fx / (skx * 2); sy = fy - (y + sky) * fy / (sky * 2);
+							gb.DrawLine(Pens.White, sx, sy, sx + 1, sy);
+						//}
+					}
+
+						break;
+				default: break;
 			}
 			gf.DrawImage(gi, 0, 0);
 		}
